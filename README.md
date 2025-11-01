@@ -1,57 +1,57 @@
-# Compressor de Huffman - Trabalho de AED2
+# Huffman Compressor - AED2 Assignment
 
-Implementação do algoritmo de Huffman para compressão de texto baseada em frequência de **palavras** (não caracteres).
+Implementation of Huffman's algorithm for text compression based on **word** frequency (not characters).
 
-## 📋 Descrição
+## 📋 Description
 
-Este projeto implementa um compressor de texto utilizando o código de Huffman como método de codificação estatística. O programa:
+This project implements a text compressor using Huffman coding as a statistical encoding method. The program:
 
-- Lê textos de um arquivo de entrada (`data/input.dat`)
-- Calcula a frequência de cada palavra
-- Constrói a árvore binária de Huffman
-- Gera códigos binários otimizados (0=esquerda, 1=direita)
-- Comprime os textos substituindo palavras por códigos
-- Gera um arquivo de saída (`data/output.dat`) com toda a documentação da compressão
+- Reads texts from an input file (`data/input.dat`)
+- Calculates the frequency of each word
+- Builds the Huffman binary tree
+- Generates optimized binary codes (0=left, 1=right)
+- Compresses texts by replacing words with codes
+- Generates an output file (`data/output.dat`) with complete compression documentation
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 
 ```
 Trabalho Huffman/
-├── main.go                     # Programa principal
-├── go.mod                      # Módulo Go
-├── README.md                   # Este arquivo
-├── .gitignore                  # Arquivos ignorados pelo git
+├── main.go                     # Main program
+├── go.mod                      # Go module
+├── README.md                   # This file
+├── .gitignore                  # Files ignored by git
 ├── data/
-│   ├── input.dat              # Arquivo de entrada (textos a comprimir)
-│   └── output.dat             # Arquivo de saída (resultado da compressão)
+│   ├── input.dat              # Input file (texts to compress)
+│   └── output.dat             # Output file (compression result)
 ├── internal/
 │   ├── reader/
-│   │   └── reader.go          # Leitor de arquivos
+│   │   └── reader.go          # File reader
 │   ├── frequency/
-│   │   └── frequency.go       # Analisador de frequências
+│   │   └── frequency.go       # Frequency analyzer
 │   ├── huffman/
-│   │   ├── tree.go            # Estrutura e construção da árvore
-│   │   └── heap.go            # Min-heap para construção eficiente
+│   │   ├── tree.go            # Tree structure and construction
+│   │   └── heap.go            # Min-heap for efficient construction
 │   ├── encoder/
-│   │   └── encoder.go         # Gerador de códigos binários
+│   │   └── encoder.go         # Binary code generator
 │   ├── compressor/
-│   │   └── compressor.go      # Compressor de texto
+│   │   └── compressor.go      # Text compressor
 │   ├── serializer/
-│   │   └── serializer.go      # Serializador da árvore
+│   │   └── serializer.go      # Tree serializer
 │   └── writer/
-│       └── writer.go          # Escritor do arquivo de saída
+│       └── writer.go          # Output file writer
 └── examples/
-    └── sample_input.dat       # Exemplo de arquivo de entrada
+    └── sample_input.dat       # Input file example
 ```
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-### Pré-requisitos
+### Prerequisites
 
-- Go 1.20 ou superior instalado
-- Sistema Linux (Ubuntu 24.04) ou compatível
+- Go 1.20 or higher installed
+- Linux system (Ubuntu 24.04) or compatible
 
-### Compilação
+### Compilation
 
 ```bash
 git clone <URL>
@@ -59,34 +59,34 @@ cd "Trabalho Huffman"
 go build -o huffman main.go
 ```
 
-### Execução
+### Execution
 
 ```bash
 ./huffman
 ```
 
-O programa irá:
-1. Ler os textos do arquivo `data/input.dat`
-2. Processar cada texto individualmente
-3. Gerar o arquivo `data/output.dat` com os resultados
+The program will:
+1. Read texts from `data/input.dat` file
+2. Process each text individually
+3. Generate `data/output.dat` file with results
 
-### Formato do Arquivo de Entrada
+### Input File Format
 
-O arquivo `data/input.dat` deve conter textos separados por **linhas em branco**:
+The `data/input.dat` file must contain texts separated by **blank lines**:
 
 ```
-Texto 1: primeira frase do primeiro texto.
+Text 1: first sentence of the first text.
 
-Texto 2: primeira frase do segundo texto.
+Text 2: first sentence of the second text.
 
-Texto 3: primeira frase do terceiro texto.
+Text 3: first sentence of the third text.
 ```
 
-## 📊 Exemplo de Saída
+## 📊 Output Example
 
-Para cada texto processado, o `output.dat` contém:
+For each processed text, `output.dat` contains:
 
-### 1. Árvore de Huffman (formato hierárquico)
+### 1. Huffman Tree (hierarchical format)
 ```
 (12:*)
   L:
@@ -99,7 +99,7 @@ Para cada texto processado, o `output.dat` contém:
             (1:velocidade)
 ```
 
-### 2. Visualização da Árvore
+### 2. Tree Visualization
 ```
 └── (*) freq=12
     ├── (*) freq=8
@@ -108,12 +108,12 @@ Para cada texto processado, o `output.dat` contém:
     │   │   └── [com] freq=1
 ```
 
-### 3. Representação Compacta (para decodificação)
+### 3. Compact Representation (for decoding)
 ```
 I(12,I(4,I(2,N(1,alta),N(1,velocidade)),...))
 ```
 
-### 4. Códigos Gerados
+### 4. Generated Codes
 ```
 alta                : 000
 com                 : 1110
@@ -121,68 +121,67 @@ computador          : 011
 dados               : 1001
 ```
 
-### 5. Texto Original
+### 5. Original Text
 ```
 O computador executa instruções em alta velocidade...
 ```
 
-### 6. Texto Comprimido (binário)
+### 6. Compressed Text (binary)
 ```
 10100111101111100000110001100100111101010
 ```
 
-### 7. Estatísticas de Compressão
+### 7. Compression Statistics
 ```
-Tamanho original:      672 bits (84 bytes)
-Tamanho comprimido:    41 bits (5 bytes + overhead)
-Taxa de compressão:    93.90%
-Número de palavras únicas: 12
-Comprimento médio dos códigos: 3.67 bits
+Original size:         672 bits (84 bytes)
+Compressed size:       41 bits (5 bytes + overhead)
+Compression rate:      93.90%
+Unique words:          12
+Average code length:   3.67 bits
 ```
 
-## 🔍 Como Funciona o Algoritmo de Huffman
+## 🔍 How Huffman's Algorithm Works
 
-1. **Análise de Frequências**: Conta quantas vezes cada palavra aparece no texto
-2. **Construção da Árvore**: 
-   - Cria nós folha para cada palavra com sua frequência
-   - Usa um min-heap para combinar os dois nós de menor frequência
-   - Repete até restar apenas um nó (raiz)
-3. **Geração de Códigos**:
-   - Percorre a árvore da raiz até cada folha
-   - Filho esquerdo = 0, filho direito = 1
-   - O caminho forma o código da palavra
-4. **Compressão**: Substitui cada palavra do texto pelo seu código binário
+1. **Frequency Analysis**: Counts how many times each word appears in the text
+2. **Tree Construction**: 
+   - Creates leaf nodes for each word with its frequency
+   - Uses a min-heap to combine the two nodes with lowest frequency
+   - Repeats until only one node remains (root)
+3. **Code Generation**:
+   - Traverses the tree from root to each leaf
+   - Left child = 0, right child = 1
+   - The path forms the word's code
+4. **Compression**: Replaces each word in the text with its binary code
 
-### Exemplo Prático
+### Practical Example
 
-Texto: "a casa a casa"
-- Frequências: {a: 2, casa: 2}
-- Árvore: `a` e `casa` têm mesma frequência, recebem códigos de 1 bit
-- Códigos: a=0, casa=1
-- Comprimido: 0 1 0 1 = "0101"
-- Original: 48 bits (6 bytes) → Comprimido: 4 bits!
+Text: "a casa a casa"
+- Frequencies: {a: 2, casa: 2}
+- Tree: `a` and `casa` have same frequency, receive 1-bit codes
+- Codes: a=0, casa=1
+- Compressed: 0 1 0 1 = "0101"
+- Original: 48 bits (6 bytes) → Compressed: 4 bits!
 
-## 📝 Detalhes de Implementação
+## 📝 Implementation Details
 
-### Estruturas Principais
+### Main Structures
 
 ```go
 type Node struct {
-    Word      string    // palavra (vazio para nós internos)
-    Frequency int       // frequência
-    Left      *Node     // filho esquerdo (código 0)
-    Right     *Node     // filho direito (código 1)
+    Word      string    // word (empty for internal nodes)
+    Frequency int       // frequency
+    Left      *Node     // left child (code 0)
+    Right     *Node     // right child (code 1)
 }
 ```
 
-### Tokenização
+### Tokenization
 
-- Converte texto para lowercase
-- Remove pontuação
-- Separa por espaços e caracteres especiais
-- Mantém apenas letras e números
+- Converts text to lowercase
+- Removes punctuation
+- Splits by spaces and special characters
+- Keeps only letters and numbers
 
 ### Min-Heap
 
-Implementa a interface `heap.Interface` do Go para construção eficiente da árvore com complexidade O(n log n).
-
+Implements Go's `heap.Interface` for efficient tree construction with O(n log n) complexity.
