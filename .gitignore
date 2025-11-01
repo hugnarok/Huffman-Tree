@@ -1,0 +1,43 @@
+pratica.pdf
+
+# Binários compilados
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+
+# Arquivos de teste
+*.test
+*.out
+
+# Dependências do Go
+go.work
+go.work.sum
+
+# Diretórios de build
+/bin
+/build
+/dist
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+
+# Arquivos de log
+*.log
+
+# Arquivos comprimidos gerados (específico para Huffman)
+*.huff
+*.compressed
+output/

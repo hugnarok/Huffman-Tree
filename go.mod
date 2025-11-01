@@ -1,3 +1,3 @@
-module github.com/hugnarok/Huffman-Tree
+module huffman
 
 go 1.25.1
