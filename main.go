@@ -38,19 +38,19 @@ func main() {
 	var i int = 1
 	for _, text := range texts {
 
-		// 2.1 Calcular frequências das palavras
+		// Calcular frequências das palavras
 		fmt.Printf("Sentence: %d\n", i)
 		frequencies := frequency.CalculateFrequency(text)
 		fmt.Printf("     -> %d unique word(s) found\n", len(frequencies))
 
-		// 2.2 Construir árvore de Huffman
+		// Construir árvore de Huffman
 		tree := huffman.BuildHuffmanTree(frequencies)
 
-		// 2.3 Gerar códigos binários
+		// Gerar códigos binários
 		codes := encoder.GenerateCodes(tree)
 		fmt.Printf("     -> %d code(s) generated\n", len(codes))
 
-		// 2.4 Comprimir texto
+		// Comprimir texto
 		compressedData := compressor.CompressText(text, codes)
 		fmt.Printf("     -> Text compressed into %d bits\n", len(compressedData))
 

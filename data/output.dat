@@ -8,15 +8,15 @@
       L:
         (2:*)
           L:
-            (1:dados)
+            (1:precisão)
           R:
-            (1:instruções)
+            (1:o)
       R:
         (2:*)
           L:
-            (1:e)
+            (1:processa)
           R:
-            (1:velocidade)
+            (1:e)
   R:
     (8:*)
       L:
@@ -24,29 +24,29 @@
           L:
             (2:*)
               L:
-                (1:processa)
+                (1:instruções)
               R:
-                (1:em)
+                (1:alta)
           R:
             (2:*)
               L:
-                (1:o)
+                (1:computador)
               R:
-                (1:precisão)
+                (1:com)
       R:
         (4:*)
           L:
             (2:*)
               L:
-                (1:com)
+                (1:dados)
               R:
-                (1:computador)
+                (1:executa)
           R:
             (2:*)
               L:
-                (1:alta)
+                (1:velocidade)
               R:
-                (1:executa)
+                (1:em)
 
 [VISUALIZAÇÃO DA ÁRVORE]
 --------------------------------------------------------------------------------
@@ -56,44 +56,44 @@ Estrutura da Árvore de Huffman:
     ├── (*) freq=8
     │   ├── (*) freq=4
     │   │   ├── (*) freq=2
-    │   │   │   ├── [executa] freq=1
-    │   │   │   └── [alta] freq=1
+    │   │   │   ├── [em] freq=1
+    │   │   │   └── [velocidade] freq=1
     │   │   └── (*) freq=2
-    │   │       ├── [computador] freq=1
-    │   │       └── [com] freq=1
+    │   │       ├── [executa] freq=1
+    │   │       └── [dados] freq=1
     │   └── (*) freq=4
     │       ├── (*) freq=2
-    │       │   ├── [precisão] freq=1
-    │       │   └── [o] freq=1
+    │       │   ├── [com] freq=1
+    │       │   └── [computador] freq=1
     │       └── (*) freq=2
-    │           ├── [em] freq=1
-    │           └── [processa] freq=1
+    │           ├── [alta] freq=1
+    │           └── [instruções] freq=1
     └── (*) freq=4
         ├── (*) freq=2
-        │   ├── [velocidade] freq=1
-        │   └── [e] freq=1
+        │   ├── [e] freq=1
+        │   └── [processa] freq=1
         └── (*) freq=2
-            ├── [instruções] freq=1
-            └── [dados] freq=1
+            ├── [o] freq=1
+            └── [precisão] freq=1
 
 [REPRESENTAÇÃO COMPACTA DA ÁRVORE (para decodificação)]
 --------------------------------------------------------------------------------
-I(12,I(4,I(2,N(1,dados),N(1,instruções)),I(2,N(1,e),N(1,velocidade))),I(8,I(4,I(2,N(1,processa),N(1,em)),I(2,N(1,o),N(1,precisão))),I(4,I(2,N(1,com),N(1,computador)),I(2,N(1,alta),N(1,executa)))))
+I(12,I(4,I(2,N(1,precisão),N(1,o)),I(2,N(1,processa),N(1,e))),I(8,I(4,I(2,N(1,instruções),N(1,alta)),I(2,N(1,computador),N(1,com))),I(4,I(2,N(1,dados),N(1,executa)),I(2,N(1,velocidade),N(1,em)))))
 
 [CÓDIGOS GERADOS]
 --------------------------------------------------------------------------------
-alta                : 1110
-com                 : 1100
-computador          : 1101
-dados               : 000
-e                   : 010
-em                  : 1001
-executa             : 1111
-instruções          : 001
-o                   : 1010
-precisão            : 1011
-processa            : 1000
-velocidade          : 011
+alta                : 1001
+com                 : 1011
+computador          : 1010
+dados               : 1100
+e                   : 011
+em                  : 1111
+executa             : 1101
+instruções          : 1000
+o                   : 001
+precisão            : 000
+processa            : 010
+velocidade          : 1110
 
 [TEXTO ORIGINAL]
 --------------------------------------------------------------------------------
@@ -101,227 +101,14 @@ O computador executa instruções em alta velocidade e processa dados com precis
 
 [TEXTO COMPRIMIDO (bits)]
 --------------------------------------------------------------------------------
-10101101111110011110011010100000011001010
+0011010110111111001111001101011001011001
 
 
 [ESTATÍSTICAS DE COMPRESSÃO]
 --------------------------------------------------------------------------------
 Tamanho original:      672 bits (84 bytes)
-Tamanho comprimido:    41 bits (5 bytes + overhead)
-Taxa de compressão:    93.90%
+Tamanho comprimido:    40 bits (5 bytes + overhead)
+Taxa de compressão:    94.05%
 Número de palavras únicas: 12
 Comprimento médio dos códigos: 3.67 bits
-
-
-================================================================================
-
-================================= TEXTO 2 =================================
-
-[ÁRVORE DE HUFFMAN]
---------------------------------------------------------------------------------
-(10:*)
-  L:
-    (4:*)
-      L:
-        (2:*)
-          L:
-            (1:memória)
-          R:
-            (1:cpu)
-      R:
-        (2:*)
-          L:
-            (1:que)
-          R:
-            (1:a)
-  R:
-    (6:*)
-      L:
-        (2:*)
-          L:
-            (1:são)
-          R:
-            (1:informações)
-      R:
-        (4:*)
-          L:
-            (2:*)
-              L:
-                (1:pela)
-              R:
-                (1:rapidamente)
-          R:
-            (2:*)
-              L:
-                (1:armazena)
-              R:
-                (1:acessadas)
-
-[VISUALIZAÇÃO DA ÁRVORE]
---------------------------------------------------------------------------------
-Estrutura da Árvore de Huffman:
-==================================================
-└── (*) freq=10
-    ├── (*) freq=6
-    │   ├── (*) freq=4
-    │   │   ├── (*) freq=2
-    │   │   │   ├── [acessadas] freq=1
-    │   │   │   └── [armazena] freq=1
-    │   │   └── (*) freq=2
-    │   │       ├── [rapidamente] freq=1
-    │   │       └── [pela] freq=1
-    │   └── (*) freq=2
-    │       ├── [informações] freq=1
-    │       └── [são] freq=1
-    └── (*) freq=4
-        ├── (*) freq=2
-        │   ├── [a] freq=1
-        │   └── [que] freq=1
-        └── (*) freq=2
-            ├── [cpu] freq=1
-            └── [memória] freq=1
-
-[REPRESENTAÇÃO COMPACTA DA ÁRVORE (para decodificação)]
---------------------------------------------------------------------------------
-I(10,I(4,I(2,N(1,memória),N(1,cpu)),I(2,N(1,que),N(1,a))),I(6,I(2,N(1,são),N(1,informações)),I(4,I(2,N(1,pela),N(1,rapidamente)),I(2,N(1,armazena),N(1,acessadas)))))
-
-[CÓDIGOS GERADOS]
---------------------------------------------------------------------------------
-a                   : 011
-acessadas           : 1111
-armazena            : 1110
-cpu                 : 001
-informações         : 101
-memória             : 000
-pela                : 1100
-que                 : 010
-rapidamente         : 1101
-são                 : 100
-
-[TEXTO ORIGINAL]
---------------------------------------------------------------------------------
-A memória armazena informações que são acessadas rapidamente pela CPU.
-
-[TEXTO COMPRIMIDO (bits)]
---------------------------------------------------------------------------------
-0111110010111111011100001
-
-
-[ESTATÍSTICAS DE COMPRESSÃO]
---------------------------------------------------------------------------------
-Tamanho original:      592 bits (74 bytes)
-Tamanho comprimido:    25 bits (3 bytes + overhead)
-Taxa de compressão:    95.78%
-Número de palavras únicas: 10
-Comprimento médio dos códigos: 3.40 bits
-
-
-================================================================================
-
-================================= TEXTO 3 =================================
-
-[ÁRVORE DE HUFFMAN]
---------------------------------------------------------------------------------
-(12:*)
-  L:
-    (4:*)
-      L:
-        (2:*)
-          L:
-            (1:recursos)
-          R:
-            (1:e)
-      R:
-        (2:*)
-          L:
-            (1:controlam)
-          R:
-            (1:operacionais)
-  R:
-    (8:*)
-      L:
-        (4:*)
-          L:
-            (2:*)
-              L:
-                (1:coordenam)
-              R:
-                (1:do)
-          R:
-            (2:os)
-      R:
-        (4:*)
-          L:
-            (2:*)
-              L:
-                (1:sistemas)
-              R:
-                (1:tarefas)
-          R:
-            (2:*)
-              L:
-                (1:processador)
-              R:
-                (1:as)
-
-[VISUALIZAÇÃO DA ÁRVORE]
---------------------------------------------------------------------------------
-Estrutura da Árvore de Huffman:
-==================================================
-└── (*) freq=12
-    ├── (*) freq=8
-    │   ├── (*) freq=4
-    │   │   ├── (*) freq=2
-    │   │   │   ├── [as] freq=1
-    │   │   │   └── [processador] freq=1
-    │   │   └── (*) freq=2
-    │   │       ├── [tarefas] freq=1
-    │   │       └── [sistemas] freq=1
-    │   └── (*) freq=4
-    │       ├── [os] freq=2
-    │       └── (*) freq=2
-    │           ├── [do] freq=1
-    │           └── [coordenam] freq=1
-    └── (*) freq=4
-        ├── (*) freq=2
-        │   ├── [operacionais] freq=1
-        │   └── [controlam] freq=1
-        └── (*) freq=2
-            ├── [e] freq=1
-            └── [recursos] freq=1
-
-[REPRESENTAÇÃO COMPACTA DA ÁRVORE (para decodificação)]
---------------------------------------------------------------------------------
-I(12,I(4,I(2,N(1,recursos),N(1,e)),I(2,N(1,controlam),N(1,operacionais))),I(8,I(4,I(2,N(1,coordenam),N(1,do)),N(2,os)),I(4,I(2,N(1,sistemas),N(1,tarefas)),I(2,N(1,processador),N(1,as)))))
-
-[CÓDIGOS GERADOS]
---------------------------------------------------------------------------------
-as                  : 1111
-controlam           : 010
-coordenam           : 1000
-do                  : 1001
-e                   : 001
-operacionais        : 011
-os                  : 101
-processador         : 1110
-recursos            : 000
-sistemas            : 1100
-tarefas             : 1101
-
-[TEXTO ORIGINAL]
---------------------------------------------------------------------------------
-Os sistemas operacionais controlam os recursos e coordenam as tarefas do processador.
-
-[TEXTO COMPRIMIDO (bits)]
---------------------------------------------------------------------------------
-101110001101010100000110001111110110011110
-
-
-[ESTATÍSTICAS DE COMPRESSÃO]
---------------------------------------------------------------------------------
-Tamanho original:      680 bits (85 bytes)
-Tamanho comprimido:    42 bits (5 bytes + overhead)
-Taxa de compressão:    93.82%
-Número de palavras únicas: 11
-Comprimento médio dos códigos: 3.55 bits
 
