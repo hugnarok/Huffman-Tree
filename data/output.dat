@@ -8,15 +8,15 @@
       L:
         (2:*)
           L:
-            (1:precisão)
+            (1:e)
           R:
-            (1:o)
+            (1:processa)
       R:
         (2:*)
           L:
-            (1:processa)
+            (1:velocidade)
           R:
-            (1:e)
+            (1:alta)
   R:
     (8:*)
       L:
@@ -24,29 +24,29 @@
           L:
             (2:*)
               L:
-                (1:instruções)
+                (1:dados)
               R:
-                (1:alta)
+                (1:instruções)
           R:
             (2:*)
               L:
-                (1:computador)
+                (1:o)
               R:
-                (1:com)
+                (1:precisão)
       R:
         (4:*)
           L:
             (2:*)
               L:
-                (1:dados)
+                (1:com)
               R:
-                (1:executa)
+                (1:computador)
           R:
             (2:*)
               L:
-                (1:velocidade)
-              R:
                 (1:em)
+              R:
+                (1:executa)
 
 [VISUALIZAÇÃO DA ÁRVORE]
 --------------------------------------------------------------------------------
@@ -56,44 +56,48 @@ Estrutura da Árvore de Huffman:
     ├── (*) freq=8
     │   ├── (*) freq=4
     │   │   ├── (*) freq=2
-    │   │   │   ├── [em] freq=1
-    │   │   │   └── [velocidade] freq=1
+    │   │   │   ├── [executa] freq=1
+    │   │   │   └── [em] freq=1
     │   │   └── (*) freq=2
-    │   │       ├── [executa] freq=1
-    │   │       └── [dados] freq=1
+    │   │       ├── [computador] freq=1
+    │   │       └── [com] freq=1
     │   └── (*) freq=4
     │       ├── (*) freq=2
-    │       │   ├── [com] freq=1
-    │       │   └── [computador] freq=1
+    │       │   ├── [precisão] freq=1
+    │       │   └── [o] freq=1
     │       └── (*) freq=2
-    │           ├── [alta] freq=1
-    │           └── [instruções] freq=1
+    │           ├── [instruções] freq=1
+    │           └── [dados] freq=1
     └── (*) freq=4
         ├── (*) freq=2
-        │   ├── [e] freq=1
-        │   └── [processa] freq=1
+        │   ├── [alta] freq=1
+        │   └── [velocidade] freq=1
         └── (*) freq=2
-            ├── [o] freq=1
-            └── [precisão] freq=1
+            ├── [processa] freq=1
+            └── [e] freq=1
 
 [REPRESENTAÇÃO COMPACTA DA ÁRVORE (para decodificação)]
 --------------------------------------------------------------------------------
-I(12,I(4,I(2,N(1,precisão),N(1,o)),I(2,N(1,processa),N(1,e))),I(8,I(4,I(2,N(1,instruções),N(1,alta)),I(2,N(1,computador),N(1,com))),I(4,I(2,N(1,dados),N(1,executa)),I(2,N(1,velocidade),N(1,em)))))
+I(12,I(4,I(2,N(1,e),N(1,processa)),I(2,N(1,velocidade),N(1,alta))),I(8,I(4,I(2,N(1,dados),N(1,instruções)),I(2,N(1,o),N(1,precisão))),I(4,I(2,N(1,com),N(1,computador)),I(2,N(1,em),N(1,executa)))))
 
 [CÓDIGOS GERADOS]
 --------------------------------------------------------------------------------
-alta                : 1001
-com                 : 1011
-computador          : 1010
-dados               : 1100
-e                   : 011
-em                  : 1111
-executa             : 1101
-instruções          : 1000
-o                   : 001
-precisão            : 000
-processa            : 010
-velocidade          : 1110
+alta                : 011
+com                 : 1100
+computador          : 1101
+dados               : 1000
+e                   : 000
+em                  : 1110
+executa             : 1111
+instruções          : 1001
+o                   : 1010
+precisão            : 1011
+processa            : 001
+velocidade          : 010
+
+[SEQUÊNCIA DE TOKENS (palavras e separadores preservados)]
+--------------------------------------------------------------------------------
+W:o|S: |W:computador|S: |W:executa|S: |W:instruções|S: |W:em|S: |W:alta|S: |W:velocidade|S: |W:e|S: |W:processa|S: |W:dados|S: |W:com|S: |W:precisão|S:.
 
 [TEXTO ORIGINAL]
 --------------------------------------------------------------------------------
@@ -101,14 +105,21 @@ O computador executa instruções em alta velocidade e processa dados com precis
 
 [TEXTO COMPRIMIDO (bits)]
 --------------------------------------------------------------------------------
-0011010110111111001111001101011001011001
+10101101111110011110011010000001100011001011
 
+
+[TEXTO DECODIFICADO (validação)]
+--------------------------------------------------------------------------------
+o computador executa instruções em alta velocidade e processa dados com precisão.
+⚠ AVISO: Texto decodificado difere do original
 
 [ESTATÍSTICAS DE COMPRESSÃO]
 --------------------------------------------------------------------------------
 Tamanho original:      672 bits (84 bytes)
-Tamanho comprimido:    40 bits (5 bytes + overhead)
-Taxa de compressão:    94.05%
+Tamanho comprimido:    44 bits (5 bytes + overhead)
+Taxa de compressão:    93.45%
 Número de palavras únicas: 12
+Número de palavras no texto: 12
+Número de separadores preservados: 12
 Comprimento médio dos códigos: 3.67 bits
 

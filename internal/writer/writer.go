@@ -3,6 +3,7 @@ package writer
 import (
 	"fmt"
 	"huffman/internal/compressor"
+	"huffman/internal/decoder"
 	"huffman/internal/huffman"
 	"huffman/internal/serializer"
 	"os"
@@ -12,10 +13,12 @@ import (
 
 // CompressedText contém todas as informações de um texto comprimido
 type CompressedText struct {
-	Tree           *huffman.Node
-	Codes          map[string]string
-	CompressedData string
-	OriginalText   string
+	Tree             *huffman.Node
+	Codes            map[string]string
+	CompressedData   string
+	OriginalText     string
+	CompressedResult compressor.CompressedResult
+	DecodedText      string
 }
 
 // WriteOutput escreve os resultados da compressão no arquivo output.dat
@@ -69,6 +72,12 @@ func writeTextResult(file *os.File, textNumber int, result CompressedText) {
 	writeCodes(file, result.Codes)
 	file.WriteString("\n")
 
+	// Seção: Sequência de Tokens (para decodificação)
+	file.WriteString("[SEQUÊNCIA DE TOKENS (palavras e separadores preservados)]\n")
+	file.WriteString(strings.Repeat("-", 80) + "\n")
+	file.WriteString(decoder.SerializeTokens(result.CompressedResult.Tokens))
+	file.WriteString("\n\n")
+
 	// Seção: Texto Original
 	file.WriteString("[TEXTO ORIGINAL]\n")
 	file.WriteString(strings.Repeat("-", 80) + "\n")
@@ -81,6 +90,17 @@ func writeTextResult(file *os.File, textNumber int, result CompressedText) {
 	writeCompressedData(file, result.CompressedData)
 	file.WriteString("\n\n")
 
+	// Seção: Texto Decodificado (validação)
+	file.WriteString("[TEXTO DECODIFICADO (validação)]\n")
+	file.WriteString(strings.Repeat("-", 80) + "\n")
+	file.WriteString(result.DecodedText)
+	file.WriteString("\n")
+	if result.DecodedText == result.OriginalText {
+		file.WriteString("✓ Decodificação bem-sucedida - texto original restaurado corretamente\n")
+	} else {
+		file.WriteString("⚠ AVISO: Texto decodificado difere do original\n")
+	}
+	file.WriteString("\n")
 	// Seção: Estatísticas
 	file.WriteString("[ESTATÍSTICAS DE COMPRESSÃO]\n")
 	file.WriteString(strings.Repeat("-", 80) + "\n")
@@ -128,6 +148,19 @@ func writeStats(file *os.File, result CompressedText) {
 	file.WriteString(fmt.Sprintf("Tamanho comprimido:    %d bits (%d bytes + overhead)\n", compressedBits, compressedBits/8))
 	file.WriteString(fmt.Sprintf("Taxa de compressão:    %.2f%%\n", compressionRate))
 	file.WriteString(fmt.Sprintf("Número de palavras únicas: %d\n", len(result.Codes)))
+
+	// Conta tokens
+	wordCount := 0
+	separatorCount := 0
+	for _, token := range result.CompressedResult.Tokens {
+		if token.IsWord {
+			wordCount++
+		} else {
+			separatorCount++
+		}
+	}
+	file.WriteString(fmt.Sprintf("Número de palavras no texto: %d\n", wordCount))
+	file.WriteString(fmt.Sprintf("Número de separadores preservados: %d\n", separatorCount))
 
 	// Calcula comprimento médio dos códigos
 	totalCodeLength := 0

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"huffman/internal/compressor"
+	"huffman/internal/decoder"
 	"huffman/internal/encoder"
 	"huffman/internal/frequency"
 	"huffman/internal/huffman"
@@ -50,20 +51,32 @@ func main() {
 		codes := encoder.GenerateCodes(tree)
 		fmt.Printf("     -> %d code(s) generated\n", len(codes))
 
-		// Comprimir texto
-		compressedData := compressor.CompressText(text, codes)
-		fmt.Printf("     -> Text compressed into %d bits\n", len(compressedData))
+		// Comprimir texto (agora preserva espaços e pontuação)
+		compressedResult := compressor.CompressText(text, codes)
+		fmt.Printf("     -> Text compressed into %d bits\n", len(compressedResult.CompressedBits))
 
+		// Decodificar para validar
+		decodedText := decoder.DecodeText(compressedResult)
+		
 		// Calcular estatísticas
-		originalBits, compressedBits, compressionRate := compressor.CalculateCompressionStats(text, compressedData, codes)
+		originalBits, compressedBits, compressionRate := compressor.CalculateCompressionStats(text, compressedResult.CompressedBits, codes)
 		fmt.Printf("     -> Compression rate: %.2f%% (%d → %d bits)\n", compressionRate, originalBits, compressedBits)
+		
+		// Verificar se a decodificação está correta
+		if decodedText == text {
+			fmt.Printf("     -> ✓ Decoding validation: SUCCESS\n")
+		} else {
+			fmt.Printf("     -> ⚠ Decoding validation: WARNING (texts differ)\n")
+		}
 
 		// Armazenar resultado
 		results = append(results, writer.CompressedText{
 			Tree:           tree,
 			Codes:          codes,
-			CompressedData: compressedData,
+			CompressedData: compressedResult.CompressedBits,
 			OriginalText:   text,
+			CompressedResult: compressedResult,
+			DecodedText:     decodedText,
 		})
 
 		fmt.Println()

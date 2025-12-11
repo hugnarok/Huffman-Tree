@@ -3,26 +3,104 @@ package compressor
 import (
 	"huffman/internal/frequency"
 	"strings"
+	"unicode"
 )
 
-// CompressText comprime um texto substituindo cada palavra pelo seu código binário
-func CompressText(text string, codes map[string]string) string {
-	var compressed strings.Builder
+// Token representa um elemento do texto: palavra ou separador (espaço, pontuação)
+type Token struct {
+	Type      string // "word" ou "separator"
+	Value     string // palavra ou caractere separador
+	IsWord    bool   // true se é palavra, false se é separador
+}
 
-	// Tokeniza o texto da mesma forma que o analisador de frequências
-	words := tokenize(text)
+// CompressedResult contém o texto comprimido e informações para decodificação
+type CompressedResult struct {
+	CompressedBits string   // sequência de bits comprimida
+	Tokens         []Token  // sequência de tokens (palavras e separadores)
+	Codes          map[string]string // códigos de Huffman
+}
 
-	// Substitui cada palavra pelo código correspondente
-	for _, word := range words {
-		if code, exists := codes[word]; exists {
-			compressed.WriteString(code)
+// CompressText comprime um texto preservando espaços e pontuação para decodificação
+func CompressText(text string, codes map[string]string) CompressedResult {
+	var compressedBits strings.Builder
+	var tokens []Token
+	
+	// Tokeniza preservando separadores
+	tokens = tokenizeWithSeparators(text)
+	
+	// Comprime cada token
+	for _, token := range tokens {
+		if token.IsWord {
+			// É uma palavra: substitui pelo código
+			if code, exists := codes[token.Value]; exists {
+				compressedBits.WriteString(code)
+			}
+		} else {
+			// É um separador: preserva como está (não comprime)
+			// Na decodificação, os separadores serão restaurados diretamente
 		}
 	}
+	
+	return CompressedResult{
+		CompressedBits: compressedBits.String(),
+		Tokens:         tokens,
+		Codes:          codes,
+	}
+}
 
-	return compressed.String()
+// tokenizeWithSeparators divide o texto em tokens preservando separadores
+func tokenizeWithSeparators(text string) []Token {
+	var tokens []Token
+	var currentWord strings.Builder
+	
+	// Verifica frequências para normalizar palavras
+	freq := frequency.CalculateFrequency(text)
+	
+	for _, r := range text {
+		if unicode.IsLetter(r) || unicode.IsNumber(r) {
+			// Adiciona caractere à palavra atual
+			currentWord.WriteRune(r)
+		} else {
+			// Fim de uma palavra (se existir)
+			if currentWord.Len() > 0 {
+				word := strings.ToLower(currentWord.String())
+				// Só adiciona se a palavra existe no dicionário (foi contada)
+				if _, exists := freq[word]; exists {
+					tokens = append(tokens, Token{
+						Type:   "word",
+						Value:  word,
+						IsWord: true,
+					})
+				}
+				currentWord.Reset()
+			}
+			
+			// Adiciona o separador (espaço, pontuação, etc.)
+			tokens = append(tokens, Token{
+				Type:   "separator",
+				Value:  string(r),
+				IsWord: false,
+			})
+		}
+	}
+	
+	// Adiciona a última palavra se existir
+	if currentWord.Len() > 0 {
+		word := strings.ToLower(currentWord.String())
+		if _, exists := freq[word]; exists {
+			tokens = append(tokens, Token{
+				Type:   "word",
+				Value:  word,
+				IsWord: true,
+			})
+		}
+	}
+	
+	return tokens
 }
 
 // tokenize divide o texto em palavras (mesma lógica do frequency package)
+// Mantida para compatibilidade
 func tokenize(text string) []string {
 	// Reutiliza a lógica de tokenização do package frequency
 	// Para garantir consistência
